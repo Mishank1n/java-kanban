@@ -1,10 +1,10 @@
-package dataclasses;
-import status.TASK_STATUS;
+package types;
+import status.TaskStatus;
 
 public class SubTask extends Task {
     private int epicId;
 
-    public SubTask(String title, String descriptionOfTask, TASK_STATUS status, int epicId) {
+    public SubTask(String title, String descriptionOfTask, TaskStatus status, int epicId) {
         super(title, descriptionOfTask, status);
         this.epicId = epicId;
     }

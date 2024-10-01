@@ -1,15 +1,14 @@
-package dataclasses;
+package types;
 import java.util.Objects;
-
-import status.TASK_STATUS;
+import status.TaskStatus;
 
 public class Task {
     private String title; 
     private int id; 
     private String descriptionOfTask;
-    private TASK_STATUS status;
+    private TaskStatus status;
 
-    public Task(String title, String descriptionOfTask, TASK_STATUS status) {
+    public Task(String title, String descriptionOfTask, TaskStatus status) {
         this.descriptionOfTask = descriptionOfTask;
         this.status = status;
         this.title = title;
@@ -27,7 +26,7 @@ public class Task {
         return descriptionOfTask;
     }
 
-    public TASK_STATUS getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
@@ -43,7 +42,7 @@ public class Task {
         this.descriptionOfTask = descriptionOfTask;
     }
 
-    public void setStatus(TASK_STATUS status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
     @Override

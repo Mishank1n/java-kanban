@@ -1,10 +1,10 @@
 package manager;
-import dataclasses.Epic;
-import dataclasses.SubTask;
-import dataclasses.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
-import status.TASK_STATUS;
+import status.TaskStatus;
+import types.Epic;
+import types.SubTask;
+import types.Task;
 
 
 
@@ -27,8 +27,8 @@ public class TaskManager {
 
     public void addSubTask (SubTask subTask){
         subTask.setId(nextId++);
+        epics.get(subTask.getEpicId()).getSubTaskIds().add(subTask.getId());
         subTasks.put(subTask.getId(), subTask);
-
     }
 
     public ArrayList printSubTaskInEpic(Epic epic){
@@ -97,7 +97,9 @@ public class TaskManager {
 
     public void removeSubTaskById(int id){
         if (subTasks.containsKey(id)) {
+            int epicIdForCheck = subTasks.get(id).getEpicId(); 
             subTasks.remove(id);
+            checkEpicStatus(epics.get(epicIdForCheck));
         } else {
             System.out.println("Error!");
         }
@@ -116,24 +118,24 @@ public class TaskManager {
 
     private void checkEpicStatus(Epic epic){
         if (epics.isEmpty()) {
-            epic.setStatus(TASK_STATUS.NEW);
+            epic.setStatus(TaskStatus.NEW);
         } else {
             boolean isAllNew = false;
             boolean isAllDone = false;
             for (Integer subTaskId : epic.getSubTaskIds()) {
-                if (subTasks.get(subTaskId).getStatus()==TASK_STATUS.IN_PROGRESS) {
-                    epic.setStatus(TASK_STATUS.IN_PROGRESS);
+                if (subTasks.get(subTaskId).getStatus()==TaskStatus.IN_PROGRESS) {
+                    epic.setStatus(TaskStatus.IN_PROGRESS);
                     return;
-                } else if (subTasks.get(subTaskId).getStatus()==TASK_STATUS.DONE) {
+                } else if (subTasks.get(subTaskId).getStatus()==TaskStatus.DONE) {
                     isAllDone=true;
                 } else {
                     isAllDone=true;
                 }
             }
             if (isAllDone) {
-                epic.setStatus(TASK_STATUS.DONE);
+                epic.setStatus(TaskStatus.DONE);
             } else {
-                epic.setStatus(TASK_STATUS.NEW);
+                epic.setStatus(TaskStatus.NEW);
             }
         }
     }

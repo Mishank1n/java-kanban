@@ -1,13 +1,12 @@
-package dataclasses;
+package types;
 import java.util.ArrayList;
-
-import status.TASK_STATUS;
+import status.TaskStatus;
 
 public class Epic extends Task{
     private ArrayList<Integer> subTaskIds = new ArrayList<>();
 
     public Epic(String title, String descriptionOfTask) {
-        super(title, descriptionOfTask, TASK_STATUS.NEW);
+        super(title, descriptionOfTask, TaskStatus.NEW);
     }
 
     public ArrayList<Integer> getSubTaskIds() {
