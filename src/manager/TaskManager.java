@@ -28,6 +28,7 @@ public class TaskManager {
     public void addSubTask (SubTask subTask){
         subTask.setId(nextId++);
         epics.get(subTask.getEpicId()).getSubTaskIds().add(subTask.getId());
+        checkEpicStatus(epics.get(subTask.getEpicId()));
         subTasks.put(subTask.getId(), subTask);
     }
 
