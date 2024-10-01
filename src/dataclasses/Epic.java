@@ -1,4 +1,7 @@
+package dataclasses;
 import java.util.ArrayList;
+
+import status.TASK_STATUS;
 
 public class Epic extends Task{
     private ArrayList<Integer> subTaskIds = new ArrayList<>();

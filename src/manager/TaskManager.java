@@ -1,5 +1,12 @@
+package manager;
+import dataclasses.Epic;
+import dataclasses.SubTask;
+import dataclasses.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
+import status.TASK_STATUS;
+
+
 
 public class TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();

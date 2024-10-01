@@ -1,3 +1,6 @@
+package dataclasses;
+import status.TASK_STATUS;
+
 public class SubTask extends Task {
     private int epicId;
 

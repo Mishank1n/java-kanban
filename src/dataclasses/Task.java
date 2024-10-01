@@ -1,4 +1,7 @@
+package dataclasses;
 import java.util.Objects;
+
+import status.TASK_STATUS;
 
 public class Task {
     private String title; 
