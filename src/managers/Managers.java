@@ -1,6 +1,7 @@
-package manager;
+package managers;
 
-import interfaces.TaskManager;
+import managers.history.InMemoryHistoryManager;
+import managers.task.InMemoryTaskManager;
 
 public class Managers {
 

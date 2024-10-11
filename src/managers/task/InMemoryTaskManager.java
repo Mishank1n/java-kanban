@@ -1,9 +1,8 @@
-package manager;
+package managers.task;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import interfaces.HistoryManager;
-import interfaces.TaskManager;
+import managers.history.InMemoryHistoryManager;
 import status.TaskStatus;
 import types.Epic;
 import types.SubTask;
