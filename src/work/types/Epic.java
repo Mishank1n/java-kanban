@@ -1,8 +1,8 @@
-package types;
+package work.types;
 import java.util.ArrayList;
-import status.TaskStatus;
+import work.status.TaskStatus;
 
-public class Epic extends Task{
+public class Epic extends Task {
     private ArrayList<Integer> subTaskIds = new ArrayList<>();
 
     public Epic(String title, String descriptionOfTask) {

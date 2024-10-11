@@ -1,13 +1,13 @@
 package tests;
 
-import managers.task.InMemoryTaskManager;
-import managers.Managers;
+import work.managers.task.InMemoryTaskManager;
+import work.managers.Managers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import status.TaskStatus;
-import types.Epic;
-import types.SubTask;
-import types.Task;
+import work.status.TaskStatus;
+import work.types.Epic;
+import work.types.SubTask;
+import work.types.Task;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {

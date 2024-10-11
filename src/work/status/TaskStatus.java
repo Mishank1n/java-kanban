@@ -1,4 +1,4 @@
-package status;
+package work.status;
 public enum TaskStatus {
     NEW, 
     IN_PROGRESS,

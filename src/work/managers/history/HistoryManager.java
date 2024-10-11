@@ -1,8 +1,8 @@
-package managers.history;
+package work.managers.history;
 
 import java.util.List;
 
-import types.Task;
+import work.types.Task;
 
 public interface HistoryManager {
 

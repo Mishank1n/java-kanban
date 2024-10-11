@@ -1,7 +1,7 @@
-package managers;
+package work.managers;
 
-import managers.history.InMemoryHistoryManager;
-import managers.task.InMemoryTaskManager;
+import work.managers.history.InMemoryHistoryManager;
+import work.managers.task.InMemoryTaskManager;
 
 public class Managers {
 

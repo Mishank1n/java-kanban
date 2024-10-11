@@ -1,8 +1,8 @@
-package managers.task;
+package work.managers.task;
 
-import types.Epic;
-import types.SubTask;
-import types.Task;
+import work.types.Epic;
+import work.types.SubTask;
+import work.types.Task;
 
 import java.util.ArrayList;
 

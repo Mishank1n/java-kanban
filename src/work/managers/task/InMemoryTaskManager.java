@@ -1,12 +1,12 @@
-package managers.task;
+package work.managers.task;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import managers.history.InMemoryHistoryManager;
-import status.TaskStatus;
-import types.Epic;
-import types.SubTask;
-import types.Task;
+import work.managers.history.InMemoryHistoryManager;
+import work.status.TaskStatus;
+import work.types.Epic;
+import work.types.SubTask;
+import work.types.Task;
 
 
 

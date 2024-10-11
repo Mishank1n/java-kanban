@@ -1,6 +1,6 @@
-package managers.history;
+package work.managers.history;
 
-import types.Task;
+import work.types.Task;
 
 import java.util.*;
 

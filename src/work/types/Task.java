@@ -1,6 +1,6 @@
-package types;
+package work.types;
 import java.util.Objects;
-import status.TaskStatus;
+import work.status.TaskStatus;
 
 public class Task {
     private String title; 
