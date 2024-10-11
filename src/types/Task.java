@@ -52,6 +52,7 @@ public class Task {
         Task newTask = (Task) obj;
         return Objects.equals(title, newTask.title) && 
             Objects.equals(descriptionOfTask, newTask.descriptionOfTask) &&
+                Objects.equals(id, newTask.id) &&
                 Objects.equals(status, newTask.status);
     }
 
@@ -74,7 +75,5 @@ public class Task {
         return "Task [title=" + title + ", id=" + id + ", descriptionOfTask=" 
             + descriptionOfTask + ", status=" + status + "]";
     }
-
-    
 
 }
