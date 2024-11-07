@@ -44,4 +44,20 @@ class InMemoryTaskManagerTest {
         assertTrue(firstSubTask.equals(secondSubTask)); //Проверка на получение и равенство, аналогично в TaskTest
         assertTrue(firstEpic.equals(secondEpic)); //Проверка на получение и равенство, аналогично в TaskTest
     }
+
+    @Test
+    public void addEpicAndSubTasksCheckDeleteFromEpic(){
+        Epic epic = new Epic("Test CheckDeleteFromEpic", "Test CheckDeleteFromEpic description");
+        manager.addEpic(epic);
+        SubTask firstSubTask = new SubTask("Test CheckDeleteFromEpic",
+                "Test CheckDeleteFromEpic description", TaskStatus.NEW, epic.getId());
+        SubTask secondSubTask = new SubTask("Test CheckDeleteFromEpic 2",
+                "Test CheckDeleteFromEpic description 2", TaskStatus.IN_PROGRESS, epic.getId());
+        manager.addSubTask(firstSubTask);
+        manager.addSubTask(secondSubTask);
+        assertTrue(epic.getSubTaskIds().size()==2);
+        manager.removeSubTaskById(secondSubTask.getId());
+        assertTrue(epic.getSubTaskIds().size()==1);
+        assertFalse(epic.getSubTaskIds().contains(secondSubTask.getId()));
+    }
 }
