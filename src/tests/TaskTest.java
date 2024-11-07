@@ -1,5 +1,6 @@
 package tests;
 
+import org.junit.jupiter.api.BeforeEach;
 import work.managers.task.InMemoryTaskManager;
 import work.managers.Managers;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,8 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskTest {
     private static Managers managers;
     private static InMemoryTaskManager manager;
-    @BeforeAll
-    public static void beforeAll(){
+
+    @BeforeEach
+    public void beforeEach(){
         managers = new Managers();
         manager = (InMemoryTaskManager) managers.getDefault();
     }
