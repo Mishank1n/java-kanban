@@ -2,12 +2,14 @@ package work.managers.history;
 
 import work.types.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private HashMap<Integer, Node> historyMap = new HashMap<>();
+    private final HashMap<Integer, Node> historyMap = new HashMap<>();
     private Node head = null;
 
     @Override

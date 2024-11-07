@@ -1,9 +1,9 @@
 package tests;
 
 import org.junit.jupiter.api.BeforeEach;
-import work.managers.task.InMemoryTaskManager;
-import work.managers.Managers;
 import org.junit.jupiter.api.Test;
+import work.managers.Managers;
+import work.managers.task.InMemoryTaskManager;
 import work.status.TaskStatus;
 import work.types.Epic;
 import work.types.SubTask;
@@ -16,9 +16,9 @@ class InMemoryHistoryManagerTest {
     private static InMemoryTaskManager manager;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         managers = new Managers();
-        manager = managers.getDefault();
+        manager = Managers.getDefault();
     }
 
     @Test
@@ -26,48 +26,47 @@ class InMemoryHistoryManagerTest {
         Task task = new Task("Test addNewTask", "Test addNewTask description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());
-        assertTrue(manager.history.getHistory().size()==1);
+        assertEquals(1, manager.history.getHistory().size());
         task.setTitle("New title");
         manager.getTaskById(task.getId());
-        assertFalse(task.equals(manager.history.getHistory().get(0) ));
+        assertNotEquals(task, manager.history.getHistory().get(0));
     }
 
     @Test
-    public void addSubTaskToHistoryAndSaveVersionOfSubTask(){
+    public void addSubTaskToHistoryAndSaveVersionOfSubTask() {
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
-        SubTask subTask = new SubTask("Test CheckHistory", "Test CheckHistory description",
-                TaskStatus.NEW, epic.getId());
+        SubTask subTask = new SubTask("Test CheckHistory", "Test CheckHistory description", TaskStatus.NEW, epic.getId());
         manager.addSubTask(subTask);
         manager.getSubTaskById(subTask.getId());
-        assertTrue(manager.history.getHistory().size()==1);
+        assertEquals(1, manager.history.getHistory().size());
         subTask.setTitle("New Title!");
-        assertFalse(subTask.equals(manager.history.getHistory().get(0)));
+        assertNotEquals(subTask, manager.history.getHistory().get(0));
     }
 
     @Test
-    public void addEpicToHistoryAndSaveVersionOfEpic(){
+    public void addEpicToHistoryAndSaveVersionOfEpic() {
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
         manager.getEpicById(epic.getId());
-        assertTrue(manager.history.getHistory().size()==1);
+        assertEquals(1, manager.history.getHistory().size());
         epic.setTitle("New Title");
-        assertFalse(epic.equals(manager.history.getHistory().get(0)));
+        assertNotEquals(epic, manager.history.getHistory().get(0));
     }
 
     @Test
-    public void checkLinkedListAddAndGet(){
+    public void checkLinkedListAddAndGet() {
         Task task = new Task("Test checkLinkedList", "Test checkLinkedList description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());
         Epic epic = new Epic("Test checkLinkedList epic", "Test checkLinkedList description");
         manager.addEpic(epic);
         manager.getEpicById(epic.getId());
-        assertTrue(epic.equals(manager.history.getHistory().get(0)));
+        assertEquals(epic, manager.history.getHistory().get(0));
         epic.setTitle("New Test checkLinkedList");
         manager.updateEpic(epic);
         manager.getEpicById(epic.getId());
-        assertTrue(epic.equals(manager.history.getHistory().get(0)));/*Проверили, что епик апдейтнулся
+        assertEquals(epic, manager.history.getHistory().get(0));/*Проверили, что епик апдейтнулся
         и тем самым проверили удаление редакт саязного списка*/
     }
 
