@@ -28,6 +28,7 @@ class TaskTest {
         assertEquals(task, manager.getAllTasks().get(0));
     }
 
+    /* Проверка на равенство и неравенство при разных и равных id для всех типов*/
     @Test
     public void checkEqualsForTasksWithSameId() {
         Task firstTask = new Task("Test CheckEquals", "Test CheckEquals description", TaskStatus.NEW);
@@ -36,9 +37,9 @@ class TaskTest {
         manager.addTask(secondTask);
         System.out.println(firstTask.getId());
         System.out.println(secondTask.getId());
-        assertNotEquals(firstTask, secondTask); //Проверяет при разных id
+        assertNotEquals(firstTask, secondTask);
         secondTask.setId(firstTask.getId());
-        assertEquals(firstTask, secondTask); //Проверяет при равных id
+        assertEquals(firstTask, secondTask);
     }
 
     @Test
@@ -51,9 +52,9 @@ class TaskTest {
         manager.addSubTask(secondSubTask);
         System.out.println(firstSubTask.getId());
         System.out.println(secondSubTask.getId());
-        assertNotEquals(firstSubTask, secondSubTask); //Проверяет при разных id сабтасков
+        assertNotEquals(firstSubTask, secondSubTask);
         secondSubTask.setId(firstSubTask.getId());
-        assertEquals(firstSubTask, secondSubTask); //Проверяет при равных id*/
+        assertEquals(firstSubTask, secondSubTask);
     }
 
     @Test

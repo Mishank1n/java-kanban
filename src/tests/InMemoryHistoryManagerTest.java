@@ -54,7 +54,8 @@ class InMemoryHistoryManagerTest {
         epic.setTitle("New Title");
         assertNotEquals(epic, manager.history.getHistory().get(0));
     }
-
+    /*Проверим, что епик апдейтнулся
+        и тем самым проверили удаление редакт саязного списка*/
     @Test
     public void checkLinkedListAddAndGet() {
         Task task = new Task("Test checkLinkedList", "Test checkLinkedList description", TaskStatus.NEW);
@@ -67,8 +68,7 @@ class InMemoryHistoryManagerTest {
         epic.setTitle("New Test checkLinkedList");
         manager.updateEpic(epic);
         manager.getEpicById(epic.getId());
-        assertEquals(epic, manager.history.getHistory().get(0));/*Проверили, что епик апдейтнулся
-        и тем самым проверили удаление редакт саязного списка*/
+        assertEquals(epic, manager.history.getHistory().get(0));
     }
 
 }

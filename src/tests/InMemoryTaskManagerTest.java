@@ -21,7 +21,7 @@ class InMemoryTaskManagerTest {
         managers = new Managers();
         manager = Managers.getDefault();
     }
-
+    /*Проверка на добавление эпиков, тасков и сабтасков, проверка на получение и равенство*/
     @Test
     public void addAndGetTask() {
         Task task = new Task("Test addNewTask", "Test addNewTask description", TaskStatus.NEW);
@@ -38,12 +38,12 @@ class InMemoryTaskManagerTest {
         manager.addEpic(firstEpic);
         SubTask firstSubTask = new SubTask("Test CheckManager", "Test CheckManager description", TaskStatus.NEW, firstEpic.getId());
         manager.addSubTask(firstSubTask);
-        assertEquals(1, manager.getAllEpics().size()); //Проверка на добавление в список эпиков
-        assertEquals(1, manager.getAllSubTasks().size()); //Проверка на добавление в список сабтасков
+        assertEquals(1, manager.getAllEpics().size());
+        assertEquals(1, manager.getAllSubTasks().size());
         Epic secondEpic = manager.getEpicById(firstEpic.getId());
         SubTask secondSubTask = manager.getSubTaskById(firstSubTask.getId());
-        assertEquals(firstSubTask, secondSubTask); //Проверка на получение и равенство, аналогично в TaskTest
-        assertEquals(firstEpic, secondEpic); //Проверка на получение и равенство, аналогично в TaskTest
+        assertEquals(firstSubTask, secondSubTask);
+        assertEquals(firstEpic, secondEpic);
     }
 
     @Test
