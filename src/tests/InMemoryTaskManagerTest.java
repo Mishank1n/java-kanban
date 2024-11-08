@@ -21,6 +21,7 @@ class InMemoryTaskManagerTest {
         managers = new Managers();
         manager = Managers.getDefault();
     }
+
     /*Проверка на добавление эпиков, тасков и сабтасков, проверка на получение и равенство*/
     @Test
     public void addAndGetTask() {
