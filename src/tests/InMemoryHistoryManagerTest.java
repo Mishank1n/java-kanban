@@ -54,6 +54,7 @@ class InMemoryHistoryManagerTest {
         epic.setTitle("New Title");
         assertNotEquals(epic, manager.history.getHistory().get(0));
     }
+
     /*Проверим, что epic обновился и тем самым проверили удаление редактирование связного списка */
     @Test
     public void checkLinkedListAddAndGet() {
