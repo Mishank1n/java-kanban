@@ -36,8 +36,6 @@ class TaskTest {
         manager.addTask(firstTask);
         Task secondTask = new Task("Test CheckEquals", "Test CheckEquals description", TaskStatus.NEW);
         manager.addTask(secondTask);
-        System.out.println(firstTask.getId());
-        System.out.println(secondTask.getId());
         assertNotEquals(firstTask, secondTask);
         secondTask.setId(firstTask.getId());
         assertEquals(firstTask, secondTask);
@@ -51,8 +49,6 @@ class TaskTest {
         manager.addSubTask(firstSubTask);
         SubTask secondSubTask = new SubTask("Test CheckEquals", "Test CheckEquals description", TaskStatus.NEW, firstEpic.getId());
         manager.addSubTask(secondSubTask);
-        System.out.println(firstSubTask.getId());
-        System.out.println(secondSubTask.getId());
         assertNotEquals(firstSubTask, secondSubTask);
         secondSubTask.setId(firstSubTask.getId());
         assertEquals(firstSubTask, secondSubTask);

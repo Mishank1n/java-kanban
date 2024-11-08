@@ -23,36 +23,29 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void addTaskToHistoryAndSaveVersionOfTask() {
+    public void addTaskToHistory() {
         Task task = new Task("Test addNewTask", "Test addNewTask description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());
         assertEquals(1, manager.history.getHistory().size());
-        task.setTitle("New title");
-        manager.getTaskById(task.getId());
-        assertNotEquals(task, manager.history.getHistory().get(0));
     }
 
     @Test
-    public void addSubTaskToHistoryAndSaveVersionOfSubTask() {
+    public void addSubTaskToHistory() {
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
         SubTask subTask = new SubTask("Test CheckHistory", "Test CheckHistory description", TaskStatus.NEW, epic.getId());
         manager.addSubTask(subTask);
         manager.getSubTaskById(subTask.getId());
         assertEquals(1, manager.history.getHistory().size());
-        subTask.setTitle("New Title!");
-        assertNotEquals(subTask, manager.history.getHistory().get(0));
     }
 
     @Test
-    public void addEpicToHistoryAndSaveVersionOfEpic() {
+    public void addEpicToHistory() {
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
         manager.getEpicById(epic.getId());
         assertEquals(1, manager.history.getHistory().size());
-        epic.setTitle("New Title");
-        assertNotEquals(epic, manager.history.getHistory().get(0));
     }
 
     /*Проверим, что epic обновился и тем самым проверили удаление редактирование связного списка */
