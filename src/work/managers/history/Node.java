@@ -4,7 +4,7 @@ import work.types.Task;
 
 import java.util.Objects;
 
-class Node{
+class Node {
     private Task task;
     private Node next;
     private Node prev;

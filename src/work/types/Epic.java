@@ -1,6 +1,8 @@
 package work.types;
-import java.util.ArrayList;
+
 import work.status.TaskStatus;
+
+import java.util.ArrayList;
 
 public class Epic extends Task {
     private ArrayList<Integer> subTaskIds = new ArrayList<>();
@@ -17,8 +19,8 @@ public class Epic extends Task {
         this.subTaskIds = subTaskIds;
     }
 
-    public void addSubTaskId(Integer subTaskId){
+    public void addSubTaskId(Integer subTaskId) {
         subTaskIds.add(subTaskId);
     }
-    
+
 }

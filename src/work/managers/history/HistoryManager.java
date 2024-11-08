@@ -1,14 +1,14 @@
 package work.managers.history;
 
-import java.util.List;
-
 import work.types.Task;
+
+import java.util.List;
 
 public interface HistoryManager {
 
-    public void add(Task task);
+    void add(Task task);
 
-    public List<Task> getHistory();
+    List<Task> getHistory();
 
-    public void remove(int id);
+    void remove(int id);
 }
