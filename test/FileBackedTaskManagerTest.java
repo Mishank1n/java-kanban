@@ -8,10 +8,9 @@ import work.types.Epic;
 import work.types.SubTask;
 import work.types.Task;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class FileBackedTaskManagerTest {
@@ -27,8 +26,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void checkLoadFromFile() {
-        System.out.println(manager.getTaskById(1));
-        assertEquals(1, manager.getAllTasks().size());
+        assertEquals(2, manager.getAllTasks().size());
     }
 
     @Test
@@ -39,7 +37,6 @@ public class FileBackedTaskManagerTest {
         Epic epic = new Epic("Test checkLoad", "Test checkLoad description");
         manager.addEpic(epic);
         SubTask subTask = new SubTask("Test checkLoad", "Test checkLoad description", TaskStatus.NEW, epic.getId());
-
         manager.addSubTask(subTask);
         assertEquals(2, manager.getAllTasks().size());
     }

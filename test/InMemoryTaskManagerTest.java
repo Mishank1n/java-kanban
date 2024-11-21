@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import work.managers.Managers;
 import work.managers.files.ManagerSaveException;
@@ -15,8 +16,8 @@ class InMemoryTaskManagerTest {
     private static Managers managers;
     private static InMemoryTaskManager manager;
 
-    @BeforeAll
-    public static void beforeAll() {
+    @BeforeEach
+    public void beforeEach() {
         managers = new Managers();
         manager = Managers.getDefault();
     }

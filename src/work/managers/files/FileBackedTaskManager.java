@@ -47,7 +47,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private Task fromString(String taskString) {
         String[] elementsOfTask = taskString.split(",");
-        System.out.println(elementsOfTask[0]);
         switch (elementsOfTask[1]) {
             case "TASK":
                 Task task = new Task(elementsOfTask[2], elementsOfTask[4], getStatusFromString(elementsOfTask[3]));

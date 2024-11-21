@@ -1,2 +1,2 @@
 id,type,name,status,description,epic
-1,TASK,Task1,NEW,Description task1,
+1,TASK,Task1,NEW,Description task1
