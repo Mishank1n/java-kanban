@@ -63,5 +63,4 @@ class InMemoryHistoryManagerTest {
         manager.getEpicById(epic.getId());
         assertEquals(epic, manager.history.getHistory().get(0));
     }
-
 }

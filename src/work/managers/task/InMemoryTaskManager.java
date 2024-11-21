@@ -1,5 +1,6 @@
 package work.managers.task;
 
+import work.managers.files.ManagerSaveException;
 import work.managers.history.InMemoryHistoryManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -11,27 +12,27 @@ import java.util.HashMap;
 
 
 public class InMemoryTaskManager implements TaskManager {
+    public final HashMap<Integer, Task> tasks = new HashMap<>();
+    public final HashMap<Integer, SubTask> subTasks = new HashMap<>();
+    public final HashMap<Integer, Epic> epics = new HashMap<>();
     public InMemoryHistoryManager history = new InMemoryHistoryManager();
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, SubTask> subTasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private int nextId = 1;
+    public int nextId = 1;
 
     @Override
-    public void addTask(Task task) {
+    public void addTask(Task task) throws ManagerSaveException {
         task.setId(nextId++);
         tasks.put(task.getId(), task);
     }
 
     @Override
-    public void addEpic(Epic epic) {
+    public void addEpic(Epic epic) throws ManagerSaveException {
         epic.setId(nextId++);
         checkEpicStatus(epic);
         epics.put(epic.getId(), epic);
     }
 
     @Override
-    public void addSubTask(SubTask subTask) {
+    public void addSubTask(SubTask subTask) throws ManagerSaveException {
         subTask.setId(nextId++);
         if (epics.containsKey(subTask.getEpicId())) {
             Epic epic = epics.get(subTask.getEpicId());

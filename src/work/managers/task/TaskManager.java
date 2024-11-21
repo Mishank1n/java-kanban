@@ -1,5 +1,6 @@
 package work.managers.task;
 
+import work.managers.files.ManagerSaveException;
 import work.types.Epic;
 import work.types.SubTask;
 import work.types.Task;
@@ -7,11 +8,11 @@ import work.types.Task;
 import java.util.ArrayList;
 
 public interface TaskManager {
-    void addTask(Task task);
+    void addTask(Task task) throws ManagerSaveException;
 
-    void addEpic(Epic epic);
+    void addEpic(Epic epic) throws ManagerSaveException;
 
-    void addSubTask(SubTask subTask);
+    void addSubTask(SubTask subTask) throws ManagerSaveException;
 
     ArrayList printSubTaskInEpic(Epic epic);
 
