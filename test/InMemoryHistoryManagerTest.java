@@ -1,8 +1,7 @@
-package tests;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import work.managers.Managers;
+import work.managers.files.ManagerSaveException;
 import work.managers.task.InMemoryTaskManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -23,7 +22,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void addTaskToHistory() {
+    public void addTaskToHistory() throws ManagerSaveException {
         Task task = new Task("Test addNewTask", "Test addNewTask description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());
@@ -31,7 +30,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void addSubTaskToHistory() {
+    public void addSubTaskToHistory() throws ManagerSaveException {
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
         SubTask subTask = new SubTask("Test CheckHistory", "Test CheckHistory description", TaskStatus.NEW, epic.getId());
@@ -41,7 +40,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void addEpicToHistory() {
+    public void addEpicToHistory() throws ManagerSaveException {
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
         manager.getEpicById(epic.getId());
@@ -50,7 +49,7 @@ class InMemoryHistoryManagerTest {
 
     /*Проверим, что epic обновился и тем самым проверили удаление редактирование связного списка */
     @Test
-    public void checkLinkedListAddAndGet() {
+    public void checkLinkedListAddAndGet() throws ManagerSaveException {
         Task task = new Task("Test checkLinkedList", "Test checkLinkedList description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());

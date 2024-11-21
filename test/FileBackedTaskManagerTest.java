@@ -1,5 +1,3 @@
-package testiki;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import work.managers.Managers;
@@ -9,7 +7,6 @@ import work.status.TaskStatus;
 import work.types.Epic;
 import work.types.SubTask;
 import work.types.Task;
-import org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
