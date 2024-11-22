@@ -18,10 +18,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public FileBackedTaskManager(String fileName) {
         super();
         this.fileName = fileName;
-        errorFindFileMessage = "Файл "+fileName+" не найден!";
+        errorFindFileMessage = "Файл " + fileName + " не найден!";
     }
-
-
 
 
     @Override
