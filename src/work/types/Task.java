@@ -9,11 +9,20 @@ public class Task {
     private int id;
     private String descriptionOfTask;
     private TaskStatus status;
+    private final Type type;
 
-    public Task(String title, String descriptionOfTask, TaskStatus status) {
+    public Task(String title, String descriptionOfTask, TaskStatus status, Type type) {
         this.descriptionOfTask = descriptionOfTask;
         this.status = status;
         this.title = title;
+        this.type = type;
+    }
+
+    public Task(String title, String descriptionOfTask, TaskStatus status) {
+        this.title = title;
+        this.descriptionOfTask = descriptionOfTask;
+        this.status = status;
+        this.type = Type.TASK;
     }
 
     public String getTitle() {
@@ -46,6 +55,10 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override

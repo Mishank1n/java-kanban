@@ -1,8 +1,7 @@
-package tests;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import work.managers.Managers;
+import work.managers.files.ManagerSaveException;
 import work.managers.task.InMemoryTaskManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -23,7 +22,7 @@ class TaskTest {
     }
 
     @Test
-    public void addTaskToManagerWithoutChanges() {
+    public void addTaskToManagerWithoutChanges() throws ManagerSaveException {
         Task task = new Task("Test CheckChanges", "Test CheckChanges description", TaskStatus.NEW);
         manager.addTask(task);
         assertEquals(task, manager.getAllTasks().get(0));
@@ -31,7 +30,7 @@ class TaskTest {
 
     /* Проверка на равенство и неравенство при разных и равных id для всех типов*/
     @Test
-    public void checkEqualsForTasksWithSameId() {
+    public void checkEqualsForTasksWithSameId() throws ManagerSaveException {
         Task firstTask = new Task("Test CheckEquals", "Test CheckEquals description", TaskStatus.NEW);
         manager.addTask(firstTask);
         Task secondTask = new Task("Test CheckEquals", "Test CheckEquals description", TaskStatus.NEW);
@@ -42,7 +41,7 @@ class TaskTest {
     }
 
     @Test
-    public void checkEqualsForSubTasksWithSameId() {
+    public void checkEqualsForSubTasksWithSameId() throws ManagerSaveException {
         Epic firstEpic = new Epic("Test CheckEquals", "Test CheckEquals description");
         manager.addEpic(firstEpic);
         SubTask firstSubTask = new SubTask("Test CheckEquals", "Test CheckEquals description", TaskStatus.NEW, firstEpic.getId());
@@ -55,7 +54,7 @@ class TaskTest {
     }
 
     @Test
-    public void checkEqualsForEpicsWithSameId() {
+    public void checkEqualsForEpicsWithSameId() throws ManagerSaveException {
         Epic firstEpic = new Epic("Test CheckEquals", "Test CheckEquals description");
         manager.addEpic(firstEpic);
         Epic secondEpic = new Epic("Test CheckEquals", "Test CheckEquals description");

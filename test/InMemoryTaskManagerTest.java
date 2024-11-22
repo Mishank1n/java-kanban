@@ -1,8 +1,7 @@
-package tests;
-
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import work.managers.Managers;
+import work.managers.files.ManagerSaveException;
 import work.managers.task.InMemoryTaskManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -16,15 +15,15 @@ class InMemoryTaskManagerTest {
     private static Managers managers;
     private static InMemoryTaskManager manager;
 
-    @BeforeAll
-    public static void beforeAll() {
+    @BeforeEach
+    public void beforeEach() {
         managers = new Managers();
         manager = Managers.getDefault();
     }
 
     /*Проверка на добавление эпиков, тасков и сабтасков, проверка на получение и равенство*/
     @Test
-    public void addAndGetTask() {
+    public void addAndGetTask() throws ManagerSaveException {
         Task task = new Task("Test addNewTask", "Test addNewTask description", TaskStatus.NEW);
         manager.addTask(task);
         assertEquals(1, manager.getAllTasks().size());
@@ -34,7 +33,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addAndGetSubTaskAndEpic() {
+    public void addAndGetSubTaskAndEpic() throws ManagerSaveException {
         Epic firstEpic = new Epic("Test CheckManager", "Test CheckManager description");
         manager.addEpic(firstEpic);
         SubTask firstSubTask = new SubTask("Test CheckManager", "Test CheckManager description", TaskStatus.NEW, firstEpic.getId());
@@ -48,7 +47,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addEpicAndSubTasksCheckDeleteFromEpic() {
+    public void addEpicAndSubTasksCheckDeleteFromEpic() throws ManagerSaveException {
         Epic epic = new Epic("Test CheckDeleteFromEpic", "Test CheckDeleteFromEpic description");
         manager.addEpic(epic);
         SubTask firstSubTask = new SubTask("Test CheckDeleteFromEpic", "Test CheckDeleteFromEpic description", TaskStatus.NEW, epic.getId());
