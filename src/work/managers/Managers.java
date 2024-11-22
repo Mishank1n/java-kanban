@@ -13,8 +13,8 @@ public class Managers {
         return new InMemoryTaskManager();
     }
 
-    public static FileBackedTaskManager loadFromFile(File file) throws ManagerSaveException {
-        FileBackedTaskManager manager = new FileBackedTaskManager(file.toString());
+    public static FileBackedTaskManager loadFromFile(String file) throws ManagerSaveException {
+        FileBackedTaskManager manager = new FileBackedTaskManager(file);
         manager.addAllTasksFromFile();
         return manager;
     }

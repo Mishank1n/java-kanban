@@ -21,7 +21,7 @@ public class FileBackedTaskManagerTest {
     @BeforeEach
     public void beforeEach() throws ManagerSaveException {
         managers = new Managers();
-        manager = Managers.loadFromFile(new File("result.txt"));
+        manager = Managers.loadFromFile("result.txt");
     }
 
     @Test
@@ -33,7 +33,6 @@ public class FileBackedTaskManagerTest {
     public void checkLoadToFile() throws ManagerSaveException {
         Task task = new Task("Test checkLoad", "Test checkLoad description", TaskStatus.NEW);
         manager.addTask(task);
-        System.out.println(manager.getTaskById(1));
         Epic epic = new Epic("Test checkLoad", "Test checkLoad description");
         manager.addEpic(epic);
         SubTask subTask = new SubTask("Test checkLoad", "Test checkLoad description", TaskStatus.NEW, epic.getId());

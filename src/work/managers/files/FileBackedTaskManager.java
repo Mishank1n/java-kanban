@@ -11,12 +11,18 @@ import java.io.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
-    String fileNane;
+    String fileName;
+    String errorWorkFileMessage = "Ошибка при работе с файлом!";
+    String errorFindFileMessage;
 
-    public FileBackedTaskManager(String fileNane) {
+    public FileBackedTaskManager(String fileName) {
         super();
-        this.fileNane = fileNane;
+        this.fileName = fileName;
+        errorFindFileMessage = "Файл "+fileName+" не найден!";
     }
+
+
+
 
     @Override
     public void addEpic(Epic epic) throws ManagerSaveException {
@@ -85,7 +91,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private void save() throws ManagerSaveException {
-        try (Writer writer = new FileWriter(fileNane)) {
+        try (Writer writer = new FileWriter(fileName)) {
             writer.write("id,type,name,status,description,epic\n");
             for (int i = 0; i < nextId; i++) {
                 if (tasks.containsKey(i)) {
@@ -109,15 +115,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new ManagerSaveException("Файл не найден!");
+            throw new ManagerSaveException(errorFindFileMessage);
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при работе с файлом");
+            throw new ManagerSaveException(errorWorkFileMessage);
         }
 
     }
 
     public void addAllTasksFromFile() throws ManagerSaveException {
-        try (Reader reader = new FileReader(fileNane); BufferedReader bufferedReader = new BufferedReader(reader)) {
+        try (Reader reader = new FileReader(fileName); BufferedReader bufferedReader = new BufferedReader(reader)) {
             bufferedReader.readLine();
             while (bufferedReader.ready()) {
                 Task task = fromString(bufferedReader.readLine());
@@ -149,9 +155,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
 
         } catch (FileNotFoundException e) {
-            throw new ManagerSaveException("Файл не найден!");
+            throw new ManagerSaveException(errorFindFileMessage);
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при работе с файлом");
+            throw new ManagerSaveException(errorWorkFileMessage);
         }
     }
 }
