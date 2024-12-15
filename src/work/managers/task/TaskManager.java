@@ -6,6 +6,7 @@ import work.types.SubTask;
 import work.types.Task;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public interface TaskManager {
     void addTask(Task task) throws ManagerSaveException;
@@ -16,13 +17,13 @@ public interface TaskManager {
 
     ArrayList printSubTaskInEpic(Epic epic);
 
-    void deleteAllTask();
+    void deleteAllTask() throws ManagerSaveException;
 
-    void deleteAllSubTask();
+    void deleteAllSubTask() throws ManagerSaveException;
 
-    void deleteAllEpics();
+    void deleteAllEpics() throws ManagerSaveException;
 
-    void deleteAllTracker();
+    void deleteAllTracker() throws ManagerSaveException;
 
     Task getTaskById(int id);
 
@@ -30,23 +31,29 @@ public interface TaskManager {
 
     Epic getEpicById(int id);
 
-    void removeTaskById(int id);
+    void removeTaskById(int id) throws ManagerSaveException;
 
-    void removeSubTaskById(int id);
+    void removeSubTaskById(int id) throws ManagerSaveException;
 
-    void removeEpicById(int id);
+    void removeEpicById(int id) throws ManagerSaveException;
 
-    void checkEpicStatus(Epic epic);
+    void checkEpicStatus(Epic epic) throws ManagerSaveException;
 
-    void updateTask(Task updateTask);
+    void updateTask(Task updateTask) throws ManagerSaveException;
 
-    void updateEpic(Epic updateEpic);
+    void updateEpic(Epic updateEpic) throws ManagerSaveException;
 
-    void updateSubTask(SubTask updateSubTask);
+    void updateSubTask(SubTask updateSubTask) throws ManagerSaveException;
 
     ArrayList<Task> getAllTasks();
 
     ArrayList<SubTask> getAllSubTasks();
 
     ArrayList<Epic> getAllEpics();
+
+    ArrayList<Task> getAllTasksInManager();
+
+    TreeSet<Task> getPrioritizedTasks();
+
+    boolean isIntersecting(Task task1, Task task2);
 }
