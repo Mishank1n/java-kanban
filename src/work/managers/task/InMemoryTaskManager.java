@@ -89,6 +89,7 @@ public class InMemoryTaskManager implements TaskManager {
         return (ArrayList<SubTask>) epic.getSubTaskIds().stream().map(subTasks::get).toList();
     }
 
+    //Фильтр для проверки наличия времени у задачи
     @Override
     public void deleteAllTask() throws ManagerSaveException {
         tasks.values().stream().filter(task -> task.getStartTime() != null).forEach(task -> prioritizedTasks.remove(task));
