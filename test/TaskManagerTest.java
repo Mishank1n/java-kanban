@@ -79,7 +79,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void checkGetEpicFromSubTaskAndDeleteAllSubTasks() throws ManagerSaveException {
         Epic epic = new Epic("Epic Test delete", "Epic Test delete description");
         manager.addEpic(epic);
-        SubTask subTask1 = new SubTask("SubTask 1 Test delete", "SubTask 1 Test delete description", TaskStatus.DONE, epic.getId());
+        SubTask subTask1 = new SubTask("SubTask 1 Test delete", "SubTask 1 Test delete description", TaskStatus.DONE, "10.10.2024 10:45", "15", epic.getId());
         SubTask subTask2 = new SubTask("SubTask 2 Test delete", "SubTask 2 Test delete description", TaskStatus.IN_PROGRESS, epic.getId());
         SubTask subTask3 = new SubTask("SubTask 3 Test delete", "SubTask 3 Test delete description", TaskStatus.DONE, epic.getId());
         manager.addSubTask(subTask1);

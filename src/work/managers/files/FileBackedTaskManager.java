@@ -107,15 +107,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         if (task.getType().equals(Type.SUBTASK)) {
             SubTask subTask = (SubTask) task;
             if (subTask.getStartTime() == null) {
-                return subTask.getId() + "," + subTask.getType().toString() + "," + subTask.getTitle() + "," + subTask.getStatus() + "," + subTask.getDescriptionOfTask() + "," + subTask.getEpicId();
+                return String.format("%d,%s,%s,%s,%s,%d", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId());
+                //return subTask.getId() + "," + subTask.getType().toString() + "," + subTask.getTitle() + "," + subTask.getStatus() + "," + subTask.getDescriptionOfTask() + "," + subTask.getEpicId();
             } else {
-                return subTask.getId() + "," + subTask.getType().toString() + "," + subTask.getTitle() + "," + subTask.getStatus() + "," + subTask.getDescriptionOfTask() + "," + subTask.getEpicId() + "," + subTask.getStartTime().format(outputFormatter) + "," + subTask.getDuration().toMinutes() + "," + subTask.getEndTime().format(outputFormatter);
+                return String.format("%d,%s,%s,%s,%s,%d,%s,%s,%s", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId(), subTask.getStartTime().format(outputFormatter), subTask.getDuration().toMinutes(), subTask.getEndTime().format(outputFormatter));
+                //return subTask.getId() + "," + subTask.getType().toString() + "," + subTask.getTitle() + "," + subTask.getStatus() + "," + subTask.getDescriptionOfTask() + "," + subTask.getEpicId() + "," + subTask.getStartTime().format(outputFormatter) + "," + subTask.getDuration().toMinutes() + "," + subTask.getEndTime().format(outputFormatter);
             }
         } else {
             if (task.getStartTime() == null || task.getDuration() == null) {
-                return task.getId() + "," + task.getType().toString() + "," + task.getTitle() + "," + task.getStatus() + "," + task.getDescriptionOfTask();
+                return String.format("%d,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask());
+                //return task.getId() + "," + task.getType().toString() + "," + task.getTitle() + "," + task.getStatus() + "," + task.getDescriptionOfTask();
             } else {
-                return task.getId() + "," + task.getType().toString() + "," + task.getTitle() + "," + task.getStatus() + "," + task.getDescriptionOfTask() + "," + task.getStartTime().format(outputFormatter) + "," + task.getDuration().toMinutes() + "," + task.getEndTime().format(outputFormatter);
+                return String.format("%d,%s,%s,%s,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask(), task.getStartTime().format(outputFormatter), task.getDuration().toMinutes(), task.getEndTime().format(outputFormatter));
+                //return task.getId() + "," + task.getType().toString() + "," + task.getTitle() + "," + task.getStatus() + "," + task.getDescriptionOfTask() + "," + task.getStartTime().format(outputFormatter) + "," + task.getDuration().toMinutes() + "," + task.getEndTime().format(outputFormatter);
             }
         }
     }

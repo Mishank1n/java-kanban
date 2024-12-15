@@ -223,7 +223,7 @@ public class InMemoryTaskManager implements TaskManager {
             task.setStartTime(updateTask.getStartTime());
             task.setDuration(updateTask.getDuration());
         } else {
-            throw new ManagerSaveException("Задачи с id " + updateTask.getId() + "нет!");
+            throw new ManagerSaveException(String.format("Задачи с id %d нет!", updateTask.getId()));
         }
     }
 
@@ -240,7 +240,7 @@ public class InMemoryTaskManager implements TaskManager {
             setDurationInEpic(epic);
             epic.setEndTime();
         } else {
-            throw new ManagerSaveException("Задачи с id " + updateEpic.getId() + "нет!");
+            throw new ManagerSaveException(String.format("Задачи с id %d нет!", updateEpic.getId()));
         }
     }
 
@@ -266,7 +266,7 @@ public class InMemoryTaskManager implements TaskManager {
                 throw new ManagerSaveException("SubTask не принадлежит ни одному из эпиков!");
             }
         } else {
-            throw new ManagerSaveException("Задачи с id " + updateSubTask.getId() + "нет!");
+            throw new ManagerSaveException(String.format("Задачи с id %d нет!", updateSubTask.getId()));
         }
     }
 
