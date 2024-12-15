@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import work.managers.Managers;
@@ -8,7 +9,7 @@ import work.types.Epic;
 import work.types.SubTask;
 import work.types.Task;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
@@ -21,7 +22,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
 
     @Test
     public void checkLoadFromFile() throws ManagerSaveException {
-        assertEquals(1, manager.getAllTasksInManager().size());
+        Assertions.assertEquals(1, manager.getAllTasksInManager().size());
         manager.deleteAllTracker();
         Task taskForAddInEnd = new Task("Test Task", "Test Task description", TaskStatus.NEW);
         manager.addTask(taskForAddInEnd);
@@ -39,7 +40,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         manager.addSubTask(subTask);
         subTask.setStatus(TaskStatus.NEW);
         manager.updateSubTask(subTask);
-        assertEquals(5, manager.getAllTasksInManager().size());
+        Assertions.assertEquals(5, manager.getAllTasksInManager().size());
         manager.deleteAllTracker();
         Task taskForAddInEnd = new Task("Test Task", "Test Task description", TaskStatus.NEW);
         manager.addTask(taskForAddInEnd);

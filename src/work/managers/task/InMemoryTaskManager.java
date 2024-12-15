@@ -97,7 +97,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllSubTask() throws ManagerSaveException {
-        subTasks.values().forEach(subTask -> prioritizedTasks.remove(subTask));
+        subTasks.values().stream().filter(subTask -> subTask.getStartTime()!=null).forEach(subTask -> prioritizedTasks.remove(subTask));
         subTasks.clear();
         epics.values().forEach(epic -> {
             epic.getSubTaskIds().clear();
@@ -107,7 +107,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllEpics() throws ManagerSaveException {
-        epics.values().forEach(epic -> prioritizedTasks.remove(epic));
         deleteAllSubTask();
         epics.clear();
     }
