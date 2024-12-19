@@ -1,7 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import work.exceptions.NotFoundException;
 import work.managers.Managers;
-import work.managers.files.ManagerSaveException;
+import work.exceptions.ManagerSaveException;
 import work.managers.task.InMemoryTaskManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -20,7 +21,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void addTaskToHistory() throws ManagerSaveException {
+    public void addTaskToHistory() throws ManagerSaveException, NotFoundException {
         Task task = new Task("Test addNewTask", "Test addNewTask description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());
@@ -28,7 +29,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void addSubTaskToHistoryAndCheckZeroHistory() throws ManagerSaveException {
+    public void addSubTaskToHistoryAndCheckZeroHistory() throws ManagerSaveException, NotFoundException {
         assertTrue(manager.history.getHistory().isEmpty());
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
@@ -39,7 +40,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void addEpicToHistory() throws ManagerSaveException {
+    public void addEpicToHistory() throws ManagerSaveException, NotFoundException {
         Epic epic = new Epic("Test CheckHistory", "Test CheckHistory description");
         manager.addEpic(epic);
         manager.getEpicById(epic.getId());
@@ -48,7 +49,7 @@ public class InMemoryHistoryManagerTest {
 
     /*Проверим, что epic обновился и тем самым проверили удаление редактирование связного списка */
     @Test
-    public void checkLinkedListAddAndGet() throws ManagerSaveException {
+    public void checkLinkedListAddAndGet() throws ManagerSaveException, NotFoundException {
         Task task = new Task("Test checkLinkedList", "Test checkLinkedList description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());
@@ -63,7 +64,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void removeTaskFromStartHistory() throws ManagerSaveException {
+    public void removeTaskFromStartHistory() throws ManagerSaveException, NotFoundException {
         Task task1 = new Task("Test remove Task 1 ", "Description of test remove 1", TaskStatus.NEW, "13.12.2024 17:00", "30");
         Task task2 = new Task("Test remove Task 2", "Description of test remove 2", TaskStatus.NEW, "13.12.2024 17:31", "30");
         manager.addTask(task1);
@@ -77,7 +78,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void removeTaskFromEndHistory() throws ManagerSaveException {
+    public void removeTaskFromEndHistory() throws ManagerSaveException, NotFoundException {
         Task task1 = new Task("Test remove Task 1 ", "Description of test remove 1", TaskStatus.NEW, "13.12.2024 17:00", "30");
         Task task2 = new Task("Test remove Task 2", "Description of test remove 2", TaskStatus.NEW, "13.12.2024 17:31", "30");
         manager.addTask(task1);
@@ -91,7 +92,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void removeTaskFromMiddleHistory() throws ManagerSaveException {
+    public void removeTaskFromMiddleHistory() throws ManagerSaveException, NotFoundException {
         Task task1 = new Task("Test remove Task 1", "Description of test remove 1", TaskStatus.NEW, "13.12.2024 17:00", "30");
         Task task2 = new Task("Test remove Task 2", "Description of test remove 2", TaskStatus.NEW, "13.12.2024 17:31", "30");
         Task task3 = new Task("Test remove Task 3", "Description of test remove 3", TaskStatus.DONE, "13.12.2024 18:30", "30");
@@ -109,7 +110,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checkDoubleTasks() throws ManagerSaveException {
+    public void checkDoubleTasks() throws ManagerSaveException, NotFoundException {
         Task task = new Task("Test checkDoubleTasks 1", "Test checkDoubleTasks 1 description", TaskStatus.NEW);
         manager.addTask(task);
         manager.getTaskById(task.getId());

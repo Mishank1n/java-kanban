@@ -1,4 +1,4 @@
-package work.managers.files;
+package work.exceptions;
 
 import java.io.IOException;
 

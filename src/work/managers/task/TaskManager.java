@@ -1,11 +1,13 @@
 package work.managers.task;
 
-import work.managers.files.ManagerSaveException;
+import work.exceptions.ManagerSaveException;
+import work.exceptions.NotFoundException;
 import work.types.Epic;
 import work.types.SubTask;
 import work.types.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 public interface TaskManager {
@@ -15,7 +17,7 @@ public interface TaskManager {
 
     void addSubTask(SubTask subTask) throws ManagerSaveException;
 
-    ArrayList printSubTaskInEpic(Epic epic);
+    List getSubTaskInEpic(Epic epic);
 
     void deleteAllTask() throws ManagerSaveException;
 
@@ -25,17 +27,17 @@ public interface TaskManager {
 
     void deleteAllTracker() throws ManagerSaveException;
 
-    Task getTaskById(int id);
+    Task getTaskById(int id) throws NotFoundException;
 
-    SubTask getSubTaskById(int id);
+    SubTask getSubTaskById(int id) throws NotFoundException;
 
-    Epic getEpicById(int id);
+    Epic getEpicById(int id) throws NotFoundException;
 
-    void removeTaskById(int id) throws ManagerSaveException;
+    void removeTaskById(int id) throws ManagerSaveException, NotFoundException;
 
-    void removeSubTaskById(int id) throws ManagerSaveException;
+    void removeSubTaskById(int id) throws ManagerSaveException, NotFoundException;
 
-    void removeEpicById(int id) throws ManagerSaveException;
+    void removeEpicById(int id) throws ManagerSaveException, NotFoundException;
 
     void checkEpicStatus(Epic epic) throws ManagerSaveException;
 
@@ -45,11 +47,11 @@ public interface TaskManager {
 
     void updateSubTask(SubTask updateSubTask) throws ManagerSaveException;
 
-    ArrayList<Task> getAllTasks();
+    List<Task> getAllTasks();
 
-    ArrayList<SubTask> getAllSubTasks();
+    List<SubTask> getAllSubTasks();
 
-    ArrayList<Epic> getAllEpics();
+    List<Epic> getAllEpics();
 
     ArrayList<Task> getAllTasksInManager();
 

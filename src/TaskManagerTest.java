@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import work.managers.files.ManagerSaveException;
+import work.exceptions.ManagerSaveException;
+import work.exceptions.NotFoundException;
 import work.managers.task.TaskManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -16,7 +17,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     abstract void setUp() throws ManagerSaveException;
 
     @Test
-    public void addAndGetAndRemoveTask() throws ManagerSaveException {
+    public void addAndGetAndRemoveTask() throws ManagerSaveException, NotFoundException {
         Task task = new Task("Test addNewTask", "Test addNewTask description", TaskStatus.NEW);
         manager.addTask(task);
         assertEquals(1, manager.getAllTasks().size());
@@ -29,7 +30,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void addAndGetSubTaskAndEpic() throws ManagerSaveException {
+    public void addAndGetSubTaskAndEpic() throws ManagerSaveException, NotFoundException {
         Epic firstEpic = new Epic("Test CheckManager", "Test CheckManager description");
         manager.addEpic(firstEpic);
         SubTask firstSubTask = new SubTask("Test CheckManager", "Test CheckManager description", TaskStatus.NEW, firstEpic.getId());
@@ -44,7 +45,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void addEpicAndSubTasksCheckDeleteFromEpicAndDeleteEpic() throws ManagerSaveException {
+    public void addEpicAndSubTasksCheckDeleteFromEpicAndDeleteEpic() throws ManagerSaveException, NotFoundException {
         Epic epic = new Epic("Test CheckDeleteFromEpic", "Test CheckDeleteFromEpic description");
         manager.addEpic(epic);
         SubTask firstSubTask = new SubTask("Test CheckDeleteFromEpic", "Test CheckDeleteFromEpic description", TaskStatus.NEW, epic.getId());
@@ -76,7 +77,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void checkGetEpicFromSubTaskAndDeleteAllSubTasks() throws ManagerSaveException {
+    public void checkGetEpicFromSubTaskAndDeleteAllSubTasks() throws ManagerSaveException, NotFoundException {
         Epic epic = new Epic("Epic Test delete", "Epic Test delete description");
         manager.addEpic(epic);
         SubTask subTask1 = new SubTask("SubTask 1 Test delete", "SubTask 1 Test delete description", TaskStatus.DONE, "10.10.2024 10:45", "15", epic.getId());

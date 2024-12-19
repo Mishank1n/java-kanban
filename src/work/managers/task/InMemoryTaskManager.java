@@ -1,6 +1,7 @@
 package work.managers.task;
 
-import work.managers.files.ManagerSaveException;
+import work.exceptions.ManagerSaveException;
+import work.exceptions.NotFoundException;
 import work.managers.history.InMemoryHistoryManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -85,8 +86,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList printSubTaskInEpic(Epic epic) {
-        return (ArrayList<SubTask>) epic.getSubTaskIds().stream().map(subTasks::get).toList();
+    public List<SubTask> getSubTaskInEpic(Epic epic) {
+        return  epic.getSubTaskIds().stream().map(subTasks::get).toList();
     }
 
     //Фильтр для проверки наличия времени у задачи
@@ -120,51 +121,48 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTaskById(int id) {
+    public Task getTaskById(int id) throws NotFoundException {
         if (tasks.containsKey(id)) {
             history.add(tasks.get(id));
             return tasks.get(id);
         } else {
-            System.out.println("Error!");
-            return null;
+            throw new NotFoundException("Not Found");
         }
     }
 
     @Override
-    public SubTask getSubTaskById(int id) {
+    public SubTask getSubTaskById(int id) throws NotFoundException {
         if (subTasks.containsKey(id)) {
             history.add(subTasks.get(id));
             return subTasks.get(id);
         } else {
-            System.out.println("Error!");
-            return null;
+            throw new NotFoundException("Not Found");
         }
     }
 
     @Override
-    public Epic getEpicById(int id) {
+    public Epic getEpicById(int id) throws NotFoundException {
         if (epics.containsKey(id)) {
             history.add(epics.get(id));
             return epics.get(id);
         } else {
-            System.out.println("Error!");
-            return null;
+            throw new NotFoundException("Not Found");
         }
     }
 
     @Override
-    public void removeTaskById(int id) throws ManagerSaveException {
+    public void removeTaskById(int id) throws ManagerSaveException, NotFoundException {
         if (tasks.containsKey(id)) {
             prioritizedTasks.remove(tasks.get(id));
             tasks.remove(id);
             history.remove(id);
         } else {
-            System.out.println("Error!");
+            throw new NotFoundException("Нет такой задачи");
         }
     }
 
     @Override
-    public void removeSubTaskById(int id) throws ManagerSaveException {
+    public void removeSubTaskById(int id) throws ManagerSaveException, NotFoundException {
         if (subTasks.containsKey(id)) {
             Epic epicForCheck = epics.get(subTasks.get(id).getEpicId());
             history.remove(id);
@@ -176,12 +174,12 @@ public class InMemoryTaskManager implements TaskManager {
             setStartTimeForEpic(epicForCheck);
             epicForCheck.setEndTime();
         } else {
-            System.out.println("Error!");
+            throw new NotFoundException("Нет такой задачи");
         }
     }
 
     @Override
-    public void removeEpicById(int id) throws ManagerSaveException {
+    public void removeEpicById(int id) throws ManagerSaveException, NotFoundException {
         if (epics.containsKey(id)) {
             epics.get(id).getSubTaskIds().forEach(integer -> {
                 subTasks.remove(integer);
@@ -190,7 +188,7 @@ public class InMemoryTaskManager implements TaskManager {
             epics.remove(id);
             history.remove(id);
         } else {
-            System.out.println("Error!");
+            throw new NotFoundException("Нет такой задачи");
         }
     }
 
@@ -271,21 +269,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getAllTasks() {
-        ArrayList<Task> gotTasks = new ArrayList<>(tasks.values());
-        return gotTasks;
+    public List<Task> getAllTasks() {
+        return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public ArrayList<SubTask> getAllSubTasks() {
-        ArrayList<SubTask> gotSubTasks = new ArrayList<>(subTasks.values());
-        return gotSubTasks;
+    public List<SubTask> getAllSubTasks() {
+        return new ArrayList<>(subTasks.values());
     }
 
     @Override
-    public ArrayList<Epic> getAllEpics() {
-        ArrayList<Epic> gotEpics = new ArrayList<>(epics.values());
-        return gotEpics;
+    public List<Epic> getAllEpics() {
+        return new ArrayList<>(epics.values());
     }
 
     @Override

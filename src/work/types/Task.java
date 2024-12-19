@@ -15,6 +15,7 @@ public class Task {
     private TaskStatus status;
     private Duration duration;
     private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
 
     public Task(String title, String descriptionOfTask, TaskStatus status, Type type, String startTime, String duration) {
@@ -25,6 +26,7 @@ public class Task {
         DateTimeFormatter insertFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         this.startTime = LocalDateTime.parse(startTime, insertFormatter);
         this.duration = Duration.ofMinutes(Integer.parseInt(duration));
+        this.endTime = this.startTime.plus(this.duration);
     }
 
     public Task(String title, String descriptionOfTask, TaskStatus status, String startTime, String duration) {
@@ -35,6 +37,7 @@ public class Task {
         DateTimeFormatter insertFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         this.startTime = LocalDateTime.parse(startTime, insertFormatter);
         this.duration = Duration.ofMinutes(Integer.parseInt(duration));
+        this.endTime = this.startTime.plus(this.duration);
     }
 
     public Task(String title, String descriptionOfTask, TaskStatus status, Type type) {
@@ -52,8 +55,8 @@ public class Task {
     }
 
     public LocalDateTime getEndTime() {
-        if (startTime != null) {
-            return startTime.plus(duration);
+        if (endTime != null) {
+            return endTime;
         } else {
             return null;
         }
