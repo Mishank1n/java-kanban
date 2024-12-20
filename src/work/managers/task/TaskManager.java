@@ -17,7 +17,7 @@ public interface TaskManager {
 
     void addSubTask(SubTask subTask) throws ManagerSaveException;
 
-    List getSubTaskInEpic(Epic epic);
+    List<SubTask> getSubTasksInEpic(Epic epic);
 
     void deleteAllTask() throws ManagerSaveException;
 
@@ -54,6 +54,8 @@ public interface TaskManager {
     List<Epic> getAllEpics();
 
     ArrayList<Task> getAllTasksInManager();
+
+    List<Task> getPrioritizedTasksList();
 
     TreeSet<Task> getPrioritizedTasks();
 

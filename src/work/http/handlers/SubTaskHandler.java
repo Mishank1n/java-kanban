@@ -5,7 +5,7 @@ import work.exceptions.ManagerSaveException;
 import work.exceptions.NotFoundException;
 import work.managers.files.FileBackedTaskManager;
 import work.managers.task.InMemoryTaskManager;
-import work.types.Task;
+import work.types.SubTask;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -13,9 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class TaskHandler extends BaseHttpHandler {
-
-    public TaskHandler(InMemoryTaskManager manager) {
+public class SubTaskHandler extends BaseHttpHandler {
+    public SubTaskHandler(InMemoryTaskManager manager) {
         super(manager);
     }
 
@@ -27,43 +26,38 @@ public class TaskHandler extends BaseHttpHandler {
 
             switch (requestMethod) {
                 case "GET":
-                    if (Pattern.matches("^/tasks$", path)) {
-                        List<Task> taskList = manager.getAllTasks();
-                        String response = gson.toJson(taskList);
+                    if (Pattern.matches("^/subtasks$", path)) {
+                        List<SubTask> allSubTasks = manager.getAllSubTasks();
+                        String response = gson.toJson(allSubTasks);
                         sendText(exchange, response);
-                        break;
-                    } else if (Pattern.matches("^/tasks/\\d+$", path)) {
-                        int taskId = parseToId(path.replaceFirst("/tasks/", ""));
+                    } else if (Pattern.matches("^/subtasks/\\d+$", path)) {
+                        int taskId = parseToId(path.replaceFirst("/subtasks/", ""));
                         if (taskId != -1) {
                             try {
-                                String response = gson.toJson(manager.getTaskById(taskId));
+                                String response = gson.toJson(manager.getSubTaskById(taskId));
                                 sendText(exchange, response);
-                                break;
                             } catch (NotFoundException e) {
                                 sendNotFound(exchange);
-                                break;
                             }
                         } else {
                             sendNotFound(exchange);
-                            break;
                         }
                     } else {
                         sendNotFound(exchange);
-                        break;
                     }
                 case "POST":
-                    if (Pattern.matches("^/tasks$", path)) {
+                    if (Pattern.matches("^/subtasks$", path)) {
                         String taskString = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                         if (!taskString.isEmpty()) {
-                            Task task = gson.fromJson(taskString, Task.class);
-                            task.setEndTime();
+                            SubTask subTask = gson.fromJson(taskString, SubTask.class);
+                            subTask.setEndTime();
                             try {
-                                if (manager.getTasks().containsKey(task.getId())) {
-                                    manager.updateTask(task);
-                                    sendText(exchange, String.format("Обновили задачу с id - %d", task.getId()));
+                                if (manager.getSubTasks().containsKey(subTask.getId())) {
+                                    manager.updateSubTask(subTask);
+                                    sendText(exchange, String.format("Обновили задачу с id - %d", subTask.getId()));
                                 } else {
-                                    manager.addTask(task);
-                                    sendText(exchange, String.format("Добавили задачу с id - %d", task.getId()));
+                                    manager.addSubTask(subTask);
+                                    sendText(exchange, String.format("Добавили задачу с id - %d", subTask.getId()));
                                 }
                             } catch (ManagerSaveException e) {
                                 if (manager.getClass().equals(FileBackedTaskManager.class)) {
@@ -86,11 +80,11 @@ public class TaskHandler extends BaseHttpHandler {
                     }
                     break;
                 case "DELETE":
-                    if (Pattern.matches("^/tasks/\\d+$", path)) {
-                        int taskId = parseToId(path.replaceFirst("/tasks/", ""));
+                    if (Pattern.matches("^/subtasks/\\d+$", path)) {
+                        int taskId = parseToId(path.replaceFirst("/subtasks/", ""));
                         if (taskId != -1) {
                             try {
-                                manager.removeTaskById(taskId);
+                                manager.removeSubTaskById(taskId);
                                 sendText(exchange, String.format("Задача с id %d удалена", taskId));
                             } catch (NotFoundException e) {
                                 sendNotFound(exchange);

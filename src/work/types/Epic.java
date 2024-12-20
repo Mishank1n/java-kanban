@@ -3,17 +3,19 @@ package work.types;
 import work.status.TaskStatus;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
     private ArrayList<Integer> subTaskIds = new ArrayList<>();
-    private LocalDateTime endTime;
 
     public Epic(String title, String descriptionOfTask) {
         super(title, descriptionOfTask, TaskStatus.NEW, Type.EPIC);
         Duration duration = Duration.ofHours(0);
         this.setDuration(duration);
+        if (this.getDuration() != null && this.getStartTime() != null) {
+            this.endTime = this.getStartTime().plus(this.getDuration());
+        }
+
     }
 
     public ArrayList<Integer> getSubTaskIds() {

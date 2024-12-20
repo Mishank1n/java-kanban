@@ -5,7 +5,8 @@ import work.exceptions.ManagerSaveException;
 import work.exceptions.NotFoundException;
 import work.managers.files.FileBackedTaskManager;
 import work.managers.task.InMemoryTaskManager;
-import work.types.Task;
+import work.types.Epic;
+import work.types.SubTask;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -13,9 +14,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class TaskHandler extends BaseHttpHandler {
+public class EpicHandler extends BaseHttpHandler {
 
-    public TaskHandler(InMemoryTaskManager manager) {
+    public EpicHandler(InMemoryTaskManager manager) {
         super(manager);
     }
 
@@ -27,43 +28,51 @@ public class TaskHandler extends BaseHttpHandler {
 
             switch (requestMethod) {
                 case "GET":
-                    if (Pattern.matches("^/tasks$", path)) {
-                        List<Task> taskList = manager.getAllTasks();
-                        String response = gson.toJson(taskList);
+                    if (Pattern.matches("^/epics$", path)) {
+                        List<Epic> epicList = manager.getAllEpics();
+                        String response = gson.toJson(epicList);
                         sendText(exchange, response);
-                        break;
-                    } else if (Pattern.matches("^/tasks/\\d+$", path)) {
-                        int taskId = parseToId(path.replaceFirst("/tasks/", ""));
+                    } else if (Pattern.matches("^/epics/\\d+$", path)) {
+                        int taskId = parseToId(path.replaceFirst("/epics/", ""));
                         if (taskId != -1) {
                             try {
-                                String response = gson.toJson(manager.getTaskById(taskId));
+                                String response = gson.toJson(manager.getEpicById(taskId));
                                 sendText(exchange, response);
-                                break;
                             } catch (NotFoundException e) {
                                 sendNotFound(exchange);
-                                break;
                             }
                         } else {
                             sendNotFound(exchange);
-                            break;
+                        }
+                    } else if (Pattern.matches("^/epics/\\d+/subtasks", path)) {
+                        int taskId = parseToId(path.replaceFirst("/epics/", "").replaceFirst("/subtasks", ""));
+                        if (taskId != -1) {
+                            try {
+                                List<SubTask> subTaskList = manager.getSubTasksInEpic(manager.getEpicById(taskId));
+                                String response = gson.toJson(subTaskList);
+                                sendText(exchange, response);
+                            } catch (NotFoundException e) {
+                                sendNotFound(exchange);
+                            }
+                        } else {
+                            sendNotFound(exchange);
                         }
                     } else {
                         sendNotFound(exchange);
-                        break;
                     }
+                    break;
                 case "POST":
-                    if (Pattern.matches("^/tasks$", path)) {
-                        String taskString = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
-                        if (!taskString.isEmpty()) {
-                            Task task = gson.fromJson(taskString, Task.class);
-                            task.setEndTime();
+                    if (Pattern.matches("^/epics$", path)) {
+                        String epicString = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+                        if (!epicString.isEmpty()) {
+                            Epic epic = gson.fromJson(epicString, Epic.class);
                             try {
-                                if (manager.getTasks().containsKey(task.getId())) {
-                                    manager.updateTask(task);
-                                    sendText(exchange, String.format("Обновили задачу с id - %d", task.getId()));
+                                if (manager.getEpics().containsKey(epic.getId())) {
+                                    manager.updateEpic(epic);
+                                    sendText(exchange, String.format("Обновили задачу с id - %d", epic.getId()));
                                 } else {
-                                    manager.addTask(task);
-                                    sendText(exchange, String.format("Добавили задачу с id - %d", task.getId()));
+                                    manager.addEpic(epic);
+                                    sendText(exchange, String.format("Добавили задачу с id - %d", epic.getId()));
                                 }
                             } catch (ManagerSaveException e) {
                                 if (manager.getClass().equals(FileBackedTaskManager.class)) {
@@ -77,20 +86,18 @@ public class TaskHandler extends BaseHttpHandler {
                                 } else {
                                     sendHasInteractions(exchange);
                                 }
-
                             }
-                            exchange.sendResponseHeaders(201, 0);
                         } else {
                             sendNotFound(exchange);
                         }
                     }
                     break;
                 case "DELETE":
-                    if (Pattern.matches("^/tasks/\\d+$", path)) {
-                        int taskId = parseToId(path.replaceFirst("/tasks/", ""));
+                    if (Pattern.matches("^/epics/\\d+$", path)) {
+                        int taskId = parseToId(path.replaceFirst("/epics/", ""));
                         if (taskId != -1) {
                             try {
-                                manager.removeTaskById(taskId);
+                                manager.removeEpicById(taskId);
                                 sendText(exchange, String.format("Задача с id %d удалена", taskId));
                             } catch (NotFoundException e) {
                                 sendNotFound(exchange);
@@ -104,6 +111,7 @@ public class TaskHandler extends BaseHttpHandler {
                     break;
                 default:
                     sendNotFound(exchange);
+                    break;
             }
         } catch (EOFException e) {
             e.printStackTrace();

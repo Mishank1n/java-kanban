@@ -17,8 +17,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final String fileName;
     private final String errorWorkFileMessage = "Ошибка при работе с файлом!";
-    private String errorFindFileMessage;
     private final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    private final String errorFindFileMessage;
 
     public FileBackedTaskManager(String fileName) {
         super();
@@ -268,7 +268,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                             nextId = task.getId() + 1;
                         }
                         if (task.getStartTime() != null) {
-                            this.getPrioritizedTasks().add(task);
+                            getPrioritizedTasks().add(task);
                         }
                     } else {
                         Epic epic = (Epic) task;

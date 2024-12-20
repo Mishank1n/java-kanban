@@ -9,13 +9,13 @@ import java.util.Objects;
 
 public class Task {
     private final Type type;
+    protected LocalDateTime endTime;
     private String title;
     private int id;
     private String descriptionOfTask;
     private TaskStatus status;
     private Duration duration;
     private LocalDateTime startTime;
-    private LocalDateTime endTime;
 
 
     public Task(String title, String descriptionOfTask, TaskStatus status, Type type, String startTime, String duration) {
@@ -52,6 +52,12 @@ public class Task {
         this.descriptionOfTask = descriptionOfTask;
         this.status = status;
         this.type = Type.TASK;
+    }
+
+    public void setEndTime() {
+        if (startTime != null) {
+            this.endTime = startTime.plus(duration);
+        }
     }
 
     public LocalDateTime getEndTime() {

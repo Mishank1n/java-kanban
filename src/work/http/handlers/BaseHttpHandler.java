@@ -1,25 +1,20 @@
 package work.http.handlers;
 
-import com.google.common.base.Utf8;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import work.managers.Managers;
-import work.managers.task.TaskManager;
-import work.types.Task;
+import work.managers.task.InMemoryTaskManager;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public abstract class BaseHttpHandler implements HttpHandler {
 
-    protected TaskManager manager;
+    protected InMemoryTaskManager manager;
     protected Gson gson;
 
-    public BaseHttpHandler(TaskManager manager) {
+    public BaseHttpHandler(InMemoryTaskManager manager) {
         this.manager = manager;
         this.gson = Managers.getGson();
     }
@@ -28,7 +23,7 @@ public abstract class BaseHttpHandler implements HttpHandler {
         byte[] resp = text.getBytes();
         httpExchange.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
         httpExchange.sendResponseHeaders(200, resp.length);
-        try (OutputStream outputStream = httpExchange.getResponseBody()){
+        try (OutputStream outputStream = httpExchange.getResponseBody()) {
             outputStream.write(resp);
         }
         httpExchange.close();
@@ -54,7 +49,7 @@ public abstract class BaseHttpHandler implements HttpHandler {
         return new String(httpExchange.getRequestBody().readAllBytes());
     }
 
-    protected int parseToId(String pathId){
+    protected int parseToId(String pathId) {
         try {
             return Integer.parseInt(pathId);
         } catch (NumberFormatException e) {
