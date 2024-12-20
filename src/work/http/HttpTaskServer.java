@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class HttpTaskServer {
-    private final int PORT = 8080;
+    private final int port = 8080;
     private final HttpServer server;
     private final Gson gson;
     private InMemoryTaskManager taskManager = Managers.getDefault();
@@ -18,7 +18,7 @@ public class HttpTaskServer {
     public HttpTaskServer(InMemoryTaskManager taskManager) throws IOException {
         this.taskManager = taskManager;
         gson = Managers.getGson();
-        server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
+        server = HttpServer.create(new InetSocketAddress("localhost", port), 0);
         server.createContext("/tasks", new TaskHandler(taskManager));
         server.createContext("/epics", new EpicHandler(taskManager));
         server.createContext("/history", new HistoryHandler(taskManager));
@@ -58,8 +58,8 @@ public class HttpTaskServer {
     }*/
 
     public void start() {
-        System.out.printf("Сервер начал работу на порту %d !", PORT);
-        System.out.printf("http://localhost:%d/tasks\n", PORT);
+        System.out.printf("Сервер начал работу на порту %d !", port);
+        System.out.printf("http://localhost:%d/tasks\n", port);
         server.start();
     }
 
