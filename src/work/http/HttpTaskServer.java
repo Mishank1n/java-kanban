@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class HttpTaskServer {
-    private final static int PORT = 8080;
-    private static InMemoryTaskManager taskManager = Managers.getDefault();
+    private final int PORT = 8080;
     private final HttpServer server;
     private final Gson gson;
+    private InMemoryTaskManager taskManager = Managers.getDefault();
 
     public HttpTaskServer(InMemoryTaskManager taskManager) throws IOException {
-        HttpTaskServer.taskManager = taskManager;
+        this.taskManager = taskManager;
         gson = Managers.getGson();
         server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
         server.createContext("/tasks", new TaskHandler(taskManager));
