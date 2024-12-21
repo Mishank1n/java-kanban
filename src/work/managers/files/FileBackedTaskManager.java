@@ -10,14 +10,12 @@ import work.types.Task;
 import work.types.Type;
 
 import java.io.*;
-import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final String fileName;
     private final String errorWorkFileMessage = "Ошибка при работе с файлом!";
-    private final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     private final String errorFindFileMessage;
 
     public FileBackedTaskManager(String fileName) {
@@ -118,14 +116,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             if (subTask.getStartTime() == null) {
                 return String.format("%d,%s,%s,%s,%s,%d", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId());
             } else {
-                return String.format("%d,%s,%s,%s,%s,%d,%s,%s,%s", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId(), subTask.getStartTime().format(outputFormatter), subTask.getDuration().toMinutes(), subTask.getEndTime().format(outputFormatter));
+                return String.format("%d,%s,%s,%s,%s,%d,%s,%s,%s", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId(), subTask.getStartTime().format(Task.insertFormatter), subTask.getDuration().toMinutes(), subTask.getEndTime().format(Task.insertFormatter));
             }
         } else {
             if (task.getStartTime() == null || task.getDuration() == null) {
                 return String.format("%d,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask());
 
             } else {
-                return String.format("%d,%s,%s,%s,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask(), task.getStartTime().format(outputFormatter), task.getDuration().toMinutes(), task.getEndTime().format(outputFormatter));
+                return String.format("%d,%s,%s,%s,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask(), task.getStartTime().format(Task.insertFormatter), task.getDuration().toMinutes(), task.getEndTime().format(Task.insertFormatter));
 
             }
         }

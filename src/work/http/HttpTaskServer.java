@@ -38,24 +38,6 @@ public class HttpTaskServer {
         return taskManager;
     }
 
-    /*public static void main(String[] args) throws IOException, NotFoundException {
-        HttpTaskServer httpServer = new HttpTaskServer(new InMemoryTaskManager());
-
-        Task task = new Task("Test", "Testing task",
-                TaskStatus.NEW, "20.10.2024 20:40","15");
-        Epic epic = new Epic("Test CheckDeleteFromEpic", "Test CheckDeleteFromEpic description");
-        httpServer.getTaskManager().addEpic(epic);
-        SubTask firstSubTask = new SubTask("Test CheckDeleteFromEpic", "Test CheckDeleteFromEpic description", TaskStatus.NEW,"19.10.2024 20:40" , "20", epic.getId());
-        SubTask secondSubTask = new SubTask("Test CheckDeleteFromEpic 2", "Test CheckDeleteFromEpic description 2", TaskStatus.IN_PROGRESS, epic.getId());
-        httpServer.getTaskManager().addSubTask(firstSubTask);
-        httpServer.getTaskManager().addSubTask(secondSubTask);
-        httpServer.getTaskManager().addTask(task);
-        httpServer.getTaskManager().getTaskById(task.getId());
-        httpServer.getTaskManager().getSubTaskById(firstSubTask.getId());
-        String res = httpServer.gson.toJson(firstSubTask);
-        httpServer.start();
-        httpServer.stop();
-    }*/
 
     public void start() {
         System.out.printf("Сервер начал работу на порту %d !", port);
