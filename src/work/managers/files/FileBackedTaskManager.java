@@ -1,5 +1,7 @@
 package work.managers.files;
 
+import work.exceptions.ManagerSaveException;
+import work.exceptions.NotFoundException;
 import work.managers.task.InMemoryTaskManager;
 import work.status.TaskStatus;
 import work.types.Epic;
@@ -8,7 +10,6 @@ import work.types.Task;
 import work.types.Type;
 
 import java.io.*;
-import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -16,7 +17,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private final String fileName;
     private final String errorWorkFileMessage = "Ошибка при работе с файлом!";
     private final String errorFindFileMessage;
-    private final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public FileBackedTaskManager(String fileName) {
         super();
@@ -24,6 +24,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         errorFindFileMessage = "Файл " + fileName + " не найден!";
     }
 
+    public String getErrorWorkFileMessage() {
+        return errorWorkFileMessage;
+    }
+
+    public String getErrorFindFileMessage() {
+        return errorFindFileMessage;
+    }
 
     @Override
     public void addEpic(Epic epic) throws ManagerSaveException {
@@ -86,19 +93,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void removeTaskById(int id) throws ManagerSaveException {
+    public void removeTaskById(int id) throws ManagerSaveException, NotFoundException {
         super.removeTaskById(id);
         save();
     }
 
     @Override
-    public void removeSubTaskById(int id) throws ManagerSaveException {
+    public void removeSubTaskById(int id) throws ManagerSaveException, NotFoundException {
         super.removeSubTaskById(id);
         save();
     }
 
     @Override
-    public void removeEpicById(int id) throws ManagerSaveException {
+    public void removeEpicById(int id) throws ManagerSaveException, NotFoundException {
         super.removeEpicById(id);
         save();
     }
@@ -108,18 +115,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             SubTask subTask = (SubTask) task;
             if (subTask.getStartTime() == null) {
                 return String.format("%d,%s,%s,%s,%s,%d", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId());
-                //return subTask.getId() + "," + subTask.getType().toString() + "," + subTask.getTitle() + "," + subTask.getStatus() + "," + subTask.getDescriptionOfTask() + "," + subTask.getEpicId();
             } else {
-                return String.format("%d,%s,%s,%s,%s,%d,%s,%s,%s", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId(), subTask.getStartTime().format(outputFormatter), subTask.getDuration().toMinutes(), subTask.getEndTime().format(outputFormatter));
-                //return subTask.getId() + "," + subTask.getType().toString() + "," + subTask.getTitle() + "," + subTask.getStatus() + "," + subTask.getDescriptionOfTask() + "," + subTask.getEpicId() + "," + subTask.getStartTime().format(outputFormatter) + "," + subTask.getDuration().toMinutes() + "," + subTask.getEndTime().format(outputFormatter);
+                return String.format("%d,%s,%s,%s,%s,%d,%s,%s,%s", subTask.getId(), subTask.getType().toString(), subTask.getTitle(), subTask.getStatus(), subTask.getDescriptionOfTask(), subTask.getEpicId(), subTask.getStartTime().format(Task.insertFormatter), subTask.getDuration().toMinutes(), subTask.getEndTime().format(Task.insertFormatter));
             }
         } else {
             if (task.getStartTime() == null || task.getDuration() == null) {
                 return String.format("%d,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask());
-                //return task.getId() + "," + task.getType().toString() + "," + task.getTitle() + "," + task.getStatus() + "," + task.getDescriptionOfTask();
+
             } else {
-                return String.format("%d,%s,%s,%s,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask(), task.getStartTime().format(outputFormatter), task.getDuration().toMinutes(), task.getEndTime().format(outputFormatter));
-                //return task.getId() + "," + task.getType().toString() + "," + task.getTitle() + "," + task.getStatus() + "," + task.getDescriptionOfTask() + "," + task.getStartTime().format(outputFormatter) + "," + task.getDuration().toMinutes() + "," + task.getEndTime().format(outputFormatter);
+                return String.format("%d,%s,%s,%s,%s,%s,%s,%s", task.getId(), task.getType().toString(), task.getTitle(), task.getStatus(), task.getDescriptionOfTask(), task.getStartTime().format(Task.insertFormatter), task.getDuration().toMinutes(), task.getEndTime().format(Task.insertFormatter));
+
             }
         }
     }
@@ -261,7 +266,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                             nextId = task.getId() + 1;
                         }
                         if (task.getStartTime() != null) {
-                            this.getPrioritizedTasks().add(task);
+                            getPrioritizedTasks().add(task);
                         }
                     } else {
                         Epic epic = (Epic) task;

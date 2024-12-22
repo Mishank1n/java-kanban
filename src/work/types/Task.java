@@ -9,12 +9,14 @@ import java.util.Objects;
 
 public class Task {
     private final Type type;
+    protected LocalDateTime endTime;
     private String title;
     private int id;
     private String descriptionOfTask;
     private TaskStatus status;
     private Duration duration;
     private LocalDateTime startTime;
+    public static DateTimeFormatter insertFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 
     public Task(String title, String descriptionOfTask, TaskStatus status, Type type, String startTime, String duration) {
@@ -22,9 +24,9 @@ public class Task {
         this.status = status;
         this.title = title;
         this.type = type;
-        DateTimeFormatter insertFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         this.startTime = LocalDateTime.parse(startTime, insertFormatter);
         this.duration = Duration.ofMinutes(Integer.parseInt(duration));
+        this.endTime = this.startTime.plus(this.duration);
     }
 
     public Task(String title, String descriptionOfTask, TaskStatus status, String startTime, String duration) {
@@ -32,9 +34,9 @@ public class Task {
         this.descriptionOfTask = descriptionOfTask;
         this.status = status;
         this.type = Type.TASK;
-        DateTimeFormatter insertFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         this.startTime = LocalDateTime.parse(startTime, insertFormatter);
         this.duration = Duration.ofMinutes(Integer.parseInt(duration));
+        this.endTime = this.startTime.plus(this.duration);
     }
 
     public Task(String title, String descriptionOfTask, TaskStatus status, Type type) {
@@ -51,9 +53,15 @@ public class Task {
         this.type = Type.TASK;
     }
 
-    public LocalDateTime getEndTime() {
+    public void setEndTime() {
         if (startTime != null) {
-            return startTime.plus(duration);
+            this.endTime = startTime.plus(duration);
+        }
+    }
+
+    public LocalDateTime getEndTime() {
+        if (endTime != null) {
+            return endTime;
         } else {
             return null;
         }
